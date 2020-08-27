@@ -5,7 +5,7 @@ import {createControl, validate, validateForm} from '../../form/formFramework';
 import Input from '../../components/UI/Input/Input';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Select from '../../components/UI/Select/Select';
-import axios from 'axios';
+import axios from '../../axios/axios-quiz';
 
 
 
@@ -70,7 +70,7 @@ export default class QuizCreator extends Component {
         this.setState({
             quiz,
             isFormValid: false,
-            rightAnswer: 1,
+            rightAnswerId: 1,
             formControls: createFormControls()
         })
     }
@@ -80,12 +80,12 @@ export default class QuizCreator extends Component {
        
 
         try {
-           await axios.post('https://react-quiz-31d3a.firebaseio.com/quizes.json', this.state.quiz)
+            await axios.post('/quizes.json', this.state.quiz)
            
            this.setState({
             quiz: [],
             isFormValid: false,
-            rightAnswer: 1,
+            rightAnswerId: 1,
             formControls: createFormControls()
         })
         } catch (e) {
@@ -134,7 +134,7 @@ export default class QuizCreator extends Component {
 
     selectChangeHandler = event => {
         this.setState({
-            rightAnswer: +event.target.value
+            rightAnswerId: +event.target.value
         })
     }
 
@@ -142,7 +142,7 @@ export default class QuizCreator extends Component {
     render() {
         const select = <Select 
             label="Choose correct answer"
-            value={this.state.rightAnswer}
+            value={this.state.rightAnswerId}
             onChange={this.selectChangeHandler}
             options={[
                 {text: 1, value: 1},
