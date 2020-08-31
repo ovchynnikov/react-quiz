@@ -9,11 +9,14 @@ import { fetchQuizById, quizAnswerClick, retryQuiz } from '../../store/actions/q
 
 class Quiz extends Component {
   
-    
     componentDidMount() {
         this.props.fetchQuizById(this.props.match.params.id)
     }
   
+    componentWillUnmount() {
+        this.props.retryQuiz()
+    }
+
     render() {
       return (
         <div className={classes.Quiz}>
@@ -50,7 +53,7 @@ class Quiz extends Component {
       results: state.quiz.results,
       isFinished: state.quiz.isFinished,
       activeQuestion: state.quiz.activeQuestion,
-      answerState: state.quiz.activeQuestion,
+      answerState: state.quiz.answerState,
       quiz: state.quiz.quiz,
       loading: state.quiz.loading,
     }

@@ -91,9 +91,11 @@ export function retryQuiz(){
   }
 }
 
-export function quizAnswerClick(answerId){
+export function quizAnswerClick(answerId) {
   return (dispatch, getState) => {
     const state = getState().quiz
+    console.log(state)
+
     if (state.answerState) {
       const key = Object.keys(state.answerState)[0]
       if (state.answerState[key] === 'success') {
@@ -111,7 +113,7 @@ export function quizAnswerClick(answerId){
       dispatch(quizSetState({[answerId]: 'success'}, results))
 
       const timeout = window.setTimeout(() => {
-        if (this.isQuizFinished(state)) {
+        if (isQuizFinished(state)) {
           dispatch(finishQuiz())
         } else {
           dispatch(quizNextQuestion(state.activeQuestion + 1))
@@ -124,7 +126,7 @@ export function quizAnswerClick(answerId){
     } 
   }
 }
-function isQuizFinished(state){
+function isQuizFinished(state) {
   return state.activeQuestion + 1 === state.quiz.length
 }
 
